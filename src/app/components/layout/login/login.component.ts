@@ -12,6 +12,7 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
+  submitted = false;
   returnUrl: string;
 
   constructor(
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
+    this.submitted = true;
     if (this.loginForm.valid) {
       this.loading = true;
       const data = this.loginForm.value;
