@@ -7,7 +7,7 @@ export class LocalStorageService {
 
   constructor() { }
 
-  private localStorageBase: any = 'Ideal.app.';
+  private localStorageBase: any = 'x.';
 
   set(key: string, data: any) {
     if (!window.localStorage) { return; }

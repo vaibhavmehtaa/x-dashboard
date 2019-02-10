@@ -53,7 +53,7 @@ export class LayoutService {
 
   get currentUsers() {
     if (this._localStorage.get('currentUser')) {
-      return this._localStorage.get('currentUser');
+      return JSON.parse(this._localStorage.get('currentUser'));
     } else {
       return false;
     }

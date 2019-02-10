@@ -1,3 +1,6 @@
 <p>
   header works!
 </p>
+<div *ngIf="isAuthorized(userInfo)"> 
+  <button pButton type="button" label="Primary" (click)="logout($event)">Logout</button>
+</div>

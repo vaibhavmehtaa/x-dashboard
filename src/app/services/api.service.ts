@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -18,6 +18,11 @@ export class ApiService {
     private _http: HttpClient
   ) { }
   baseUrl: string = this._appConfig.baseURL;
+  
+  private _handleGet(service: string, options) {
+    let opts = this._prepareHTTPOptions(options);
+    return this._http.get(this.baseUrl + service, opts)
+  }
 
   private _handlePost(service: String, options) {
     const { data } = options;
@@ -34,8 +39,8 @@ export class ApiService {
     this.apiBusy = true;
     const { type } = options;
     switch (type) {
-      // case 'GET':
-      //   return this._handleGet(service, options);
+      case 'GET':
+        return this._handleGet(service, options);
 
       case 'POST':
         return this._handlePost(service, options);
@@ -60,5 +65,40 @@ export class ApiService {
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     // console.error(errMsg); // log to console instead
     return Observable.throw(error);
+  }
+
+  private _prepareHTTPOptions(options) {
+    const {data, headers, requestOptions} = options;
+    let params = new HttpParams();
+    for (let key in data) {
+      if (data[key]) {
+        if (typeof data[key] === 'object') {
+          params = params.set(key, JSON.stringify(data[key]));
+        } else {
+          params = params.set(key, data[key]);
+        }
+      }
+    }
+    let opts = {
+      params,
+      'withCredentials': true
+    };
+    if (headers) {
+      let newHeaders = new HttpHeaders();
+      for (let key in headers) {
+        if (headers[key]) {
+          if (typeof headers[key] === 'string') {
+            newHeaders = newHeaders.append(key, headers[key]);
+          } else {
+            newHeaders = newHeaders.append(key, headers[key].toString());
+          }
+        }
+      }
+      (opts as any).headers = newHeaders;
+    }
+    if (requestOptions) {
+      opts = Object.assign({}, opts, requestOptions);
+    }
+    return opts;
   }
 }
