@@ -4,5 +4,6 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
   })
 export class AppConfig {
-    baseURL = 'https://reqres.in/api'
+    // baseURL = 'https://reqres.in/api'
+    baseURL = 'http://mockbin.com'
 }
