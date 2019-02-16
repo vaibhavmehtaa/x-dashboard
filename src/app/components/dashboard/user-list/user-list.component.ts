@@ -51,7 +51,8 @@ export class UserListComponent implements OnInit {
       { field: 'color', header: 'Color' }
     ];
     let opts = {type: 'GET', data: {
-      page: 2
+      // page: 2,
+      foo: 'bar'
     }}
 
     this._fakeService.getFakeData(opts).subscribe( (data) => {

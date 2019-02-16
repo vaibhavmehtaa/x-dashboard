@@ -5,6 +5,6 @@ import { Injectable } from '@angular/core';
   })
 export class DashboardConfig {
    URLs =  {
-       fake_data: '/users'
+       fake_data: '/request'
    };
 }

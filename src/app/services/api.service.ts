@@ -85,6 +85,7 @@ export class ApiService {
     };
     if (headers) {
       let newHeaders = new HttpHeaders();
+      newHeaders = newHeaders.append('Accept-Encoding', 'gzip');
       for (let key in headers) {
         if (headers[key]) {
           if (typeof headers[key] === 'string') {
